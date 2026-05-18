@@ -1,0 +1,23 @@
+#!/system/bin/sh
+# SSH force-command wrapper
+# Login as root via SSH, immediately drop to shell user.
+# Use `su` to elevate back to root inside the session.
+
+export PATH=/system/bin:/system/xbin:/system_ext/bin:/sbin:$PATH
+
+# Locate su (Magisk path varies)
+SU=""
+for p in /system/bin/su /system/xbin/su /sbin/su /system_ext/bin/su /debug_ramdisk/su; do
+    [ -x "$p" ] && SU="$p" && break
+done
+
+if [ -z "$SU" ]; then
+    echo "ERROR: su not found in expected paths" >&2
+    exec /system/bin/sh
+fi
+
+if [ -n "$SSH_ORIGINAL_COMMAND" ]; then
+    exec "$SU" shell -c "$SSH_ORIGINAL_COMMAND"
+else
+    exec "$SU" shell
+fi
