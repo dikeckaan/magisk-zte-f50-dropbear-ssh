@@ -26,44 +26,44 @@ done
 
 if [ -s "$AUTH_KEYS" ] && [ -z "$FOUND" ]; then
   # Existing install, no new key provided - keep existing
-  ui_print "[*] Mevcut authorized_keys korunuyor:"
+  ui_print "[*] Keeping existing authorized_keys:"
   ui_print "    $AUTH_KEYS"
 elif [ -n "$FOUND" ]; then
   # New key file found
   if [ -s "$AUTH_KEYS" ]; then
-    ui_print "[*] Yeni anahtar dosyasi bulundu: $FOUND"
+    ui_print "[*] New key file found: $FOUND"
     ui_print ""
-    ui_print "    Vol(+) = Uzerine yaz (mevcutlari sil)"
-    ui_print "    Vol(-) = Mevcutlara EKLE"
+    ui_print "    Vol(+) = Overwrite (remove existing)"
+    ui_print "    Vol(-) = Append to existing"
     ui_print ""
     if chooseport; then
       cp "$FOUND" "$AUTH_KEYS"
-      ui_print "[OK] Anahtarlar yeniden yazildi."
+      ui_print "[OK] Keys overwritten."
     else
       cat "$FOUND" >> "$AUTH_KEYS"
-      ui_print "[OK] Anahtarlar mevcutlara eklendi."
+      ui_print "[OK] Keys appended to existing."
     fi
   else
-    ui_print "[*] Anahtar dosyasi yukleniyor: $FOUND"
+    ui_print "[*] Loading key file: $FOUND"
     cp "$FOUND" "$AUTH_KEYS"
-    ui_print "[OK] Anahtarlar yuklendi."
+    ui_print "[OK] Keys installed."
   fi
   rm -f "$FOUND"
 else
   # No existing keys AND no new key file - abort
-  ui_print "[!] HATA: authorized_keys bulunamadi!"
+  ui_print "[!] ERROR: authorized_keys not found!"
   ui_print ""
-  ui_print "Kurulumdan once SSH public key dosyasini"
-  ui_print "asagidaki konumlardan birine koyun:"
+  ui_print "Before installing, place your SSH public key at"
+  ui_print "one of the following locations:"
   for f in $KEY_SEARCH; do
     ui_print "  - $f"
   done
   ui_print ""
-  ui_print "Ornek (Mac'ten):"
+  ui_print "Example (from your Mac):"
   ui_print "  adb push ~/.ssh/id_*.pub /sdcard/authorized_keys"
   ui_print ""
-  ui_print "Sonra modulu tekrar flashlayin."
-  abort "[!] Anahtar dosyasi olmadan kurulum iptal edildi."
+  ui_print "Then re-flash the module."
+  abort "[!] Aborted: no key file provided."
 fi
 
 chmod 600 "$AUTH_KEYS"
@@ -75,9 +75,9 @@ set_perm "$MODPATH/system/bin/dropbearkey" 0 2000 0755
 set_perm "$MODPATH/system/bin/ssh-login" 0 2000 0755
 
 ui_print ""
-ui_print "[OK] Kurulum tamamlandi."
+ui_print "[OK] Installation complete."
 ui_print ""
-ui_print "Anahtar dosyasi: $AUTH_KEYS"
-ui_print "Baglanma: ssh -p 22222 root@HOST"
-ui_print "(force command -> shell user, su ile root'a gec)"
+ui_print "Key file: $AUTH_KEYS"
+ui_print "Connect:  ssh -p 22222 root@HOST"
+ui_print "(force-command -> shell user, then 'su' for root)"
 ui_print ""
