@@ -1,7 +1,7 @@
 id=dropbear-ssh
 name=Dropbear SSH Server
-version=v1.0.1
-versionCode=2
+version=v1.0.2
+versionCode=3
 author=kaandikec
-description=Dropbear SSH server on port 22222 with key-only auth (login as shell, su for root)
+description=Dropbear SSH server on port 22222, key-only auth. Host keys in /data/ssh/keys, authorized_keys at /data/ssh/authorized_keys. Requires bin-utils v1.3.0+.
 updateJson=https://raw.githubusercontent.com/dikeckaan/magisk-zte-f50-dropbear-ssh/main/update.json

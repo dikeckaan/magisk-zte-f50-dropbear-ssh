@@ -13,6 +13,13 @@ ui_print "  Login: shell (su for root)"
 ui_print "=================================="
 ui_print ""
 
+# Hard dependency: bin-utils v1.3.0+ for lib/common.sh.
+if [ ! -r /data/adb/modules/bin-utils/lib/common.sh ] \
+   && [ ! -r /data/adb/modules_update/bin-utils/lib/common.sh ]; then
+    ui_print "[!] HATA: bin-utils v1.3.0+ kurulu degil (lib/common.sh yok)."
+    abort "[!] Missing dependency: bin-utils v1.3.0+"
+fi
+
 mkdir -p "$DATADIR"
 
 # Look for a key file placed by the user
