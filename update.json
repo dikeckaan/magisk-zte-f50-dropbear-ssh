@@ -2,5 +2,6 @@
     "version": "v1.0.2",
     "versionCode": 3,
     "zipUrl": "https://github.com/dikeckaan/magisk-zte-f50-dropbear-ssh/releases/download/v1.0.2/dropbear-ssh-v1.0.2.zip",
+    "sha256": "1f22c3acd2de41c2b8d679023f3d494ba459e9ddd08047a5fc92206c34097ae1",
     "changelog": "https://raw.githubusercontent.com/dikeckaan/magisk-zte-f50-dropbear-ssh/main/CHANGELOG.md"
 }
